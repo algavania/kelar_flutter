@@ -15,5 +15,10 @@ class AppRouter extends _$AppRouter {
       initial: true,
       transitionsBuilder: TransitionsBuilders.fadeIn,
     ),
+    CustomRoute(
+      page: ForgotPasswordRoute.page,
+      path: '/forgot-password',
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+    ),
   ];
 }
