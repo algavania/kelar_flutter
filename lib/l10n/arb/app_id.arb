@@ -1,0 +1,7 @@
+{
+  "@@locale": "id",
+  "helloWorld": "Halo dunia",
+  "yes": "Ya",
+  "no": "Tidak",
+  "emptyValidatorMessage": "Tidak boleh kosong"
+}
