@@ -3,5 +3,18 @@
   "helloWorld": "Halo dunia",
   "yes": "Ya",
   "no": "Tidak",
-  "emptyValidatorMessage": "Tidak boleh kosong"
+  "emptyValidatorMessage": "Tidak boleh kosong",
+  "register": "Register",
+  "login": "Login",
+  "yourEmail": "Email Anda",
+  "yourName": "Nama lengkap Anda",
+  "yourPassword": "Password Anda",
+  "enterPassword": "Masukkan password",
+  "enterEmail": "Masukkan email",
+  "enterName": "Masukkan nama",
+  "loginSubText": "Belum punya akun?",
+  "loginSubText2": "Register di sini",
+  "forgotPassword": "Lupa password?",
+  "loginText1": "Login!",
+  "loginText2": "Login untuk akses penuh ke K3LAR!"
 }
