@@ -46,7 +46,7 @@ class CustomButton extends StatelessWidget {
       constraints: const BoxConstraints(
         minHeight: 50,
       ),
-      width: width,
+      width: width ?? double.infinity,
       height: height,
       child: widget,
     );

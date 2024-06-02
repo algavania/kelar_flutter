@@ -1,8 +1,9 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kelar_flutter/core/color_values.dart';
 import 'package:kelar_flutter/core/styles.dart';
 import 'package:kelar_flutter/l10n/l10n.dart';
+import 'package:kelar_flutter/routes/router.dart';
 import 'package:kelar_flutter/widgets/custom_button.dart';
 import 'package:kelar_flutter/widgets/custom_gesture_unfocus.dart';
 import 'package:kelar_flutter/widgets/custom_text_field.dart';
@@ -68,16 +69,22 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(context.l10n.forgotPassword,
-                              style: Theme.of(context).textTheme.displaySmall,),
+                          GestureDetector(
+                            onTap: () {
+                              AutoRouter.of(context)
+                                  .push(const ForgotPasswordRoute());
+                            },
+                            child: Text(
+                              context.l10n.forgotPasswordText,
+                              style: Theme.of(context).textTheme.displaySmall,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: Styles.bigSpacing),
                       CustomButton(
                         text: context.l10n.login,
-                        width: double.infinity,
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                       ),
                       Expanded(child: Container()),
                       SizedBox(height: 3.h),

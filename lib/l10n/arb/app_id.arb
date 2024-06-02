@@ -14,7 +14,10 @@
   "enterName": "Masukkan nama",
   "loginSubText": "Belum punya akun?",
   "loginSubText2": "Register di sini",
-  "forgotPassword": "Lupa password?",
+  "forgotPasswordText": "Lupa password?",
+  "forgotPassword": "Lupa Password",
+  "forgotPasswordDescription": "Kami akan mengirimkan email ke email Anda.",
   "loginText1": "Login!",
-  "loginText2": "Login untuk akses penuh ke K3LAR!"
+  "loginText2": "Login untuk akses penuh ke K3LAR!",
+  "submit": "Kirim"
 }

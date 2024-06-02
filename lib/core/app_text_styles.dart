@@ -4,8 +4,8 @@ import 'package:kelar_flutter/core/color_values.dart';
 
 const _extraLargeFontSize = 36.0;
 const _largerFontSize = 32.0;
-const _largeFontSize = 22.0;
-const _mediumFontSize = 18.0;
+const _largeFontSize = 20.0;
+const _mediumFontSize = 16.0;
 const _smallFontSize = 13.0;
 const _extraSmallFontSize = 11.0;
 const _regular = FontWeight.w400;
