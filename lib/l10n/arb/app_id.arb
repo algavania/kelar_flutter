@@ -19,5 +19,50 @@
   "forgotPasswordDescription": "Kami akan mengirimkan email ke email Anda.",
   "loginText1": "Login!",
   "loginText2": "Login untuk akses penuh ke K3LAR!",
-  "submit": "Kirim"
+  "submit": "Kirim",
+  "home": "Beranda",
+  "profile": "Akun",
+  "statistic": "Statistik",
+  "feedback": "Feedback",
+  "goodAfternoon": "Selamat siang",
+  "goodEvening": "Selamat sore",
+  "goodMorning": "Selamat pagi",
+  "goodNight": "Selamat malam",
+  "monitoring": "Monitoring",
+  "analysis": "Analisis",
+  "workEnvironment": "Keadaan Lingkungan Kerja",
+  "viewStatistic": "Lihat Statistik",
+  "action": "Tindak lanjut",
+  "pending": "Pending",
+  "accepted": "Diterima",
+  "denied": "Ditolak",
+  "urgency": "Urgensi",
+  "humidity": "Kelembaban",
+  "temperature": "Suhu",
+  "co2": "CO2",
+  "co": "CO",
+  "pm25": "PM 2.5",
+  "addFeedback": "Tulis Feedback",
+  "urgencyHint": "Pilih Urgensi",
+  "feedbackHint": "Tuliskan feedback ...",
+  "send": "Kirim",
+  "addSuccessPopUp": "{title} berhasil ditambahkan.",
+  "@addSuccessPopUp": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "high": "Tinggi",
+  "medium": "Sedang",
+  "low": "Rendah",
+  "description": "Deskripsi",
+  "employee": "Pegawai",
+  "employeeDescription": "Sebagai karyawan, Anda dapat mengakses hasil monitoring kualitas lingkungan kerja, dan menuliskan feedback untuk meningkatkan kualitas lingkungan kerja agar bisa lebih baik lagi.",
+  "manager": "Manajer",
+  "managerDescription": "Sebagai manajer, Anda dapat mengakses hasil monitoring kualitas udara pada lingkungan kerja, dan menuliskan feedback. Selain itu, Anda juga dapat menindak lanjuti feedback karyawan untuk meningkatkan kualitas udara menjadi lebih baik lagi.",
+  "logout": "Keluar",
+  "logoutAlert": "Apakah Anda yakin ingin keluar dari akun Anda?",
+  "confirmation": "Konfirmasi"
 }

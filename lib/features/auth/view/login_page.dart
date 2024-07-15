@@ -84,7 +84,10 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: Styles.bigSpacing),
                       CustomButton(
                         text: context.l10n.login,
-                        onPressed: () {},
+                        onPressed: () {
+                          AutoRouter.of(context)
+                              .replace(const DashboardRoute());
+                        },
                       ),
                       Expanded(child: Container()),
                       SizedBox(height: 3.h),
