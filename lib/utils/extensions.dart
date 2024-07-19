@@ -110,8 +110,8 @@ extension FormattedDateTime on DateTime {
     return DateFormat('dd/MM/y HH:mm').format(this);
   }
 
-  String toFormattedLongDateWithHour() {
-    return DateFormat('dd MMMM y HH:mm').format(this);
+  String toFormattedLongDateWithHour({String locale = 'id_ID'}) {
+    return DateFormat('dd MMMM y HH:mm', locale).format(this);
   }
 
   String toYearMonthString() {

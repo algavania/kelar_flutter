@@ -11,6 +11,20 @@ Future<Either<Failure, T>> safeCall<T>(Future<T> Function() operation) async {
   }
 }
 
+Either<Failure, T> safeCallSync<T>(T Function() operation) {
+  try {
+    return Right(operation());
+  } catch (e, s) {
+    logger.e('error', error: e.toString(), stackTrace: s);
+    return Left(Failure(e.toString()));
+  }
+}
+
+
 mixin UseCase<T, P> {
   Future<T> call(P params);
+}
+
+mixin UseCaseSync<T, P> {
+  T call(P params);
 }

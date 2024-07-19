@@ -11,7 +11,7 @@ class UserModel with _$UserModel {
     required String role,
     String? photoUrl,
     @JsonKey(includeToJson: false, includeFromJson: false)
-    int? id,
+    String? id,
     @JsonKey(includeToJson: false, includeFromJson: false)
     String? password,
   }) = _UserModel;

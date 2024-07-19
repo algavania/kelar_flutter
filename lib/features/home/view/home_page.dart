@@ -1,14 +1,19 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:kelar_flutter/core/color_values.dart';
 import 'package:kelar_flutter/core/styles.dart';
+import 'package:kelar_flutter/features/dashboard/data/sensor/sensor_model.dart';
+import 'package:kelar_flutter/features/dashboard/view/bloc/dashboard_bloc.dart';
+import 'package:kelar_flutter/injector/injector.dart';
 import 'package:kelar_flutter/l10n/l10n.dart';
 import 'package:kelar_flutter/utils/extensions.dart';
 import 'package:kelar_flutter/utils/logger.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:sizer/sizer.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -19,6 +24,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _bloc = Injector.instance<DashboardBloc>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,60 +99,83 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMonitoringWidget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.l10n.monitoring,
-          style: context.textTheme.titleLarge,
-        ),
-        const SizedBox(
-          height: Styles.defaultSpacing,
-        ),
-        _buildRowItems(
-          _buildMonitoringItemWidget(
-            context.l10n.humidity,
-            Symbols.humidity_percentage,
-            '80',
-            '%',
-          ),
-          _buildMonitoringItemWidget(
-            context.l10n.temperature,
-            Symbols.thermostat,
-            '30.8',
-            'C',
-          ),
-        ),
-        const SizedBox(
-          height: Styles.defaultSpacing,
-        ),
-        _buildRowItems(
-          _buildMonitoringItemWidget(
-            context.l10n.co2,
-            Symbols.air,
-            '322',
-            'ppm',
-          ),
-          _buildMonitoringItemWidget(
-            context.l10n.co,
-            Symbols.air,
-            '0.28',
-            'ppm',
-          ),
-        ),
-        const SizedBox(
-          height: Styles.defaultSpacing,
-        ),
-        _buildRowItems(
-          _buildMonitoringItemWidget(
-            context.l10n.pm25,
-            Symbols.airwave,
-            '23.54',
-            'ug/m3',
-          ),
-          _buildViewStatisticWidget(),
-        ),
-      ],
+    return BlocBuilder<DashboardBloc, DashboardState>(
+      bloc: _bloc..add(const DashboardEvent.getSensors()),
+      builder: (context, state) {
+        return StreamBuilder<List<SensorModel>>(
+          stream: _bloc.sensorStream,
+          builder: (context, snapshot) {
+            var data = generateMockSensorModel();
+            if (snapshot.data?.isNotEmpty ?? false) {
+              data = snapshot.data!.first;
+            }
+            logger.d('snapshot ${snapshot.data}');
+            return Skeletonizer(
+              enabled: snapshot.data == null,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.l10n.monitoring,
+                    style: context.textTheme.titleLarge,
+                  ),
+                  Text(
+                    context.l10n
+                        .latestTime(data.date.toFormattedLongDateWithHour()),
+                    style: context.textTheme.bodyMedium,
+                  ),
+                  const SizedBox(
+                    height: Styles.defaultSpacing,
+                  ),
+                  _buildRowItems(
+                    _buildMonitoringItemWidget(
+                      context.l10n.humidity,
+                      Symbols.humidity_percentage,
+                      data.humidity,
+                      '%',
+                    ),
+                    _buildMonitoringItemWidget(
+                      context.l10n.temperature,
+                      Symbols.thermostat,
+                      data.temperature,
+                      'C',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: Styles.defaultSpacing,
+                  ),
+                  _buildRowItems(
+                    _buildMonitoringItemWidget(
+                      context.l10n.co2,
+                      Symbols.air,
+                      data.co2,
+                      'ppm',
+                    ),
+                    _buildMonitoringItemWidget(
+                      context.l10n.co,
+                      Symbols.air,
+                      data.co,
+                      'ppm',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: Styles.defaultSpacing,
+                  ),
+                  _buildRowItems(
+                    _buildMonitoringItemWidget(
+                      context.l10n.pm25,
+                      Symbols.airwave,
+                      data.pm25,
+                      'ug/m3',
+                    ),
+                    _buildViewStatisticWidget(),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -201,7 +231,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildMonitoringItemWidget(
     String title,
     IconData icon,
-    String value,
+    num value,
     String unit,
   ) {
     return Container(
@@ -237,7 +267,7 @@ class _HomePageState extends State<HomePage> {
           ),
           RichText(
             text: TextSpan(
-              text: value,
+              text: value.toString(),
               style: context.textTheme.titleMedium
                   .copyWith(color: ColorValues.primary50),
               children: [

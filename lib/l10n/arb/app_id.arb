@@ -65,5 +65,13 @@
   "logout": "Keluar",
   "logoutAlert": "Apakah Anda yakin ingin keluar dari akun Anda?",
   "confirmation": "Konfirmasi",
-  "appTagline": "Solusi K3 Anda"
+  "appTagline": "Solusi K3 Anda",
+  "latestTime": "Data terakhir pada {content}",
+  "@latestTime": {
+    "placeholders": {
+      "content": {
+        "type": "String"
+      }
+    }
+  }
 }

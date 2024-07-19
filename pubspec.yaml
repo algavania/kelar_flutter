@@ -35,7 +35,7 @@ dependencies:
   material_symbols_icons: ^4.2768.0
   shared_preferences: ^2.2.3
   sizer: ^2.0.15
-  skeletonizer: ^1.2.0
+  skeletonizer: ^1.4.1+1
   syncfusion_flutter_sliders: ^26.1.41
   unicons: ^2.1.1
 
