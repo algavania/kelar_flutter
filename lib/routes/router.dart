@@ -10,9 +10,14 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
     CustomRoute(
+      page: SplashRoute.page,
+      path: '/splash',
+      initial: true,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+    ),
+    CustomRoute(
       page: LoginRoute.page,
       path: '/login',
-      initial: true,
       transitionsBuilder: TransitionsBuilders.fadeIn,
     ),
     CustomRoute(

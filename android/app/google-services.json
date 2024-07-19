@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "499698435245",
+    "project_id": "sic-k3lar",
+    "storage_bucket": "sic-k3lar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499698435245:android:13169d17ab5cdc9c3fb224",
+        "android_client_info": {
+          "package_name": "com.sic.kelar_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499698435245-t9arakhf948jagcmgh8ps12gc67o88fj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz7x7LJa6g-Gce9FORSjwETx3M3XQouXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499698435245-t9arakhf948jagcmgh8ps12gc67o88fj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

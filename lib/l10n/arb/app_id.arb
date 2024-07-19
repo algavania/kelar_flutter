@@ -64,5 +64,6 @@
   "managerDescription": "Sebagai manajer, Anda dapat mengakses hasil monitoring kualitas udara pada lingkungan kerja, dan menuliskan feedback. Selain itu, Anda juga dapat menindak lanjuti feedback karyawan untuk meningkatkan kualitas udara menjadi lebih baik lagi.",
   "logout": "Keluar",
   "logoutAlert": "Apakah Anda yakin ingin keluar dari akun Anda?",
-  "confirmation": "Konfirmasi"
+  "confirmation": "Konfirmasi",
+  "appTagline": "Solusi K3 Anda"
 }
