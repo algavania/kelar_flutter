@@ -84,5 +84,6 @@
   "updateFeedbackSuccess": "Feedback berhasil diubah!",
   "updateFeedbackManagerSuccess": "Tanggapan berhasil dikirim!",
   "notReviewed": "Menunggu tanggapan",
-  "reviewed": "Sudah ditanggapi"
+  "reviewed": "Sudah ditanggapi",
+  "roomQuality": "Kualitas Ruangan"
 }

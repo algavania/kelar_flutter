@@ -5,7 +5,7 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:kelar_flutter/core/color_values.dart';
 import 'package:kelar_flutter/core/styles.dart';
-import 'package:kelar_flutter/features/dashboard/data/sensor/sensor_model.dart';
+import 'package:kelar_flutter/features/dashboard/data/models/sensor/sensor_model.dart';
 import 'package:kelar_flutter/features/dashboard/view/bloc/dashboard_bloc.dart';
 import 'package:kelar_flutter/injector/injector.dart';
 import 'package:kelar_flutter/l10n/l10n.dart';
@@ -26,6 +26,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _bloc = Injector.instance<DashboardBloc>();
+  SensorModel? _lastSensor;
+  var _hasFetched = false;
 
   @override
   void initState() {
@@ -70,38 +72,81 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          context.l10n.analysis,
-          style: context.textTheme.titleLarge,
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                context.l10n.analysis,
+                style: context.textTheme.titleLarge,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                if (_lastSensor != null) {
+                  _bloc.add(DashboardEvent.getClassifications(_lastSensor!));
+                }
+              },
+              icon: const Icon(
+                IconsaxPlusBold.refresh,
+                color: ColorValues.primary50,
+              ),
+            ),
+          ],
         ),
         const SizedBox(
           height: Styles.defaultSpacing,
         ),
-        Container(
-          width: 100.w,
-          padding: const EdgeInsets.all(Styles.defaultPadding),
-          decoration: BoxDecoration(
-            color: ColorValues.white,
-            borderRadius: BorderRadius.circular(Styles.defaultBorder),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.l10n.workEnvironment,
-                style: context.textTheme.titleMedium,
+        BlocBuilder<DashboardBloc, DashboardState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            var adviceText = 'Lorem ipsum dolor sit amet';
+            if (_bloc.advice != null) {
+              adviceText = _bloc.advice!.advice.join('\n\n');
+            }
+            return Skeletonizer(
+              enabled: _bloc.advice == null,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildCard(context.l10n.roomQuality, _bloc.advice?.quality ?? 'Baik',),
+                  const SizedBox(
+                    height: Styles.defaultSpacing,
+                  ),
+                  _buildCard(context.l10n.workEnvironment, adviceText,),
+                ],
               ),
-              const SizedBox(
-                height: Styles.defaultSpacing,
-              ),
-              const Text(
-                'Lorem ipsum dolor sit amet',
-                style: TextStyle(color: ColorValues.grey50),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ],
+    );
+  }
+
+  Widget _buildCard(String title, String text,) {
+    return Container(
+      width: 100.w,
+      padding: const EdgeInsets.all(Styles.defaultPadding),
+      decoration: BoxDecoration(
+        color: ColorValues.white,
+        borderRadius: BorderRadius.circular(Styles.defaultBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: context.textTheme.titleMedium,
+          ),
+          const SizedBox(
+            height: Styles.defaultSpacing,
+          ),
+          Text(
+            text,
+            style: context.textTheme.bodyMedium.copyWith(
+              color: ColorValues.grey50,),
+          ),
+        ],
+      ),
     );
   }
 
@@ -115,6 +160,14 @@ class _HomePageState extends State<HomePage> {
             var data = generateMockSensorModel();
             if (snapshot.data?.isNotEmpty ?? false) {
               data = snapshot.data!.first;
+              _lastSensor = data;
+              if (_bloc.lastData.isEmpty) {
+                _bloc.lastData = snapshot.data ?? [];
+              }
+              if (!_hasFetched) {
+                _hasFetched = true;
+                _bloc.add(DashboardEvent.getClassifications(data));
+              }
             }
             logger.d('snapshot ${snapshot.data}');
             return Skeletonizer(
@@ -240,12 +293,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMonitoringItemWidget(
-    String title,
-    IconData icon,
-    num value,
-    String unit,
-  ) {
+  Widget _buildMonitoringItemWidget(String title,
+      IconData icon,
+      num value,
+      String unit,) {
     return Container(
       constraints: BoxConstraints(
         minHeight: 11.h,

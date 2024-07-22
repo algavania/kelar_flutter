@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kelar_flutter/features/dashboard/data/sensor/sensor_model.dart';
+import 'package:kelar_flutter/features/dashboard/data/models/advice/advice_model.dart';
+import 'package:kelar_flutter/features/dashboard/data/models/sensor/sensor_model.dart';
+import 'package:kelar_flutter/features/dashboard/domain/usecase/get_classifications.dart';
 import 'package:kelar_flutter/features/dashboard/domain/usecase/get_sensors.dart';
 import 'package:kelar_flutter/injector/injector.dart';
 import 'package:kelar_flutter/utils/logger.dart';
@@ -17,13 +19,21 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<_GetSensors>(
       _onGetSensors,
     );
+    on<_GetClassifications>(
+      _onGetClassifications,
+    );
+
     on<_Reset>(
       _onReset,
     );
   }
 
   final _getSensors = Injector.instance<GetSensors>();
+  final _getClassifications = Injector.instance<GetClassifications>();
+  List<SensorModel> lastData = [];
   Stream<List<SensorModel>>? sensorStream;
+  AdviceModel? advice;
+  DateTime? lastAdviceDate;
 
   Future<void> _onReset(
     _Reset event,
@@ -43,6 +53,23 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }, (data) {
       logger.d('data $data');
       sensorStream = data;
+      emit(const DashboardState.loaded());
+    });
+  }
+
+  Future<void> _onGetClassifications(
+      _GetClassifications event,
+      Emitter<DashboardState> emit,
+      ) async {
+    advice = null;
+    emit(const DashboardState.loading());
+    final res = await _getClassifications.call(event.data);
+    res.fold((failure) {
+      emit(DashboardState.error(failure.message));
+    }, (data) {
+      logger.d('data $data');
+      lastAdviceDate = event.data.date;
+      advice = data;
       emit(const DashboardState.loaded());
     });
   }

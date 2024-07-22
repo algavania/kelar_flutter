@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:kelar_flutter/core/styles.dart';
-import 'package:kelar_flutter/features/dashboard/data/sensor/sensor_model.dart';
+import 'package:kelar_flutter/features/dashboard/data/models/sensor/sensor_model.dart';
 import 'package:kelar_flutter/features/dashboard/view/bloc/dashboard_bloc.dart';
 import 'package:kelar_flutter/injector/injector.dart';
 import 'package:kelar_flutter/l10n/l10n.dart';
@@ -36,8 +36,10 @@ class _StatisticPageState extends State<StatisticPage> {
                 children: [
                   _buildChart(
                     snapshot.data ??
-                        List.generate(5, (_) => generateMockSensorModel()),
-                    snapshot.data == null,
+                        (_bloc.lastData.isEmpty
+                            ? List.generate(5, (_) => generateMockSensorModel())
+                            : _bloc.lastData),
+                    snapshot.data == null && _bloc.lastData.isEmpty,
                   ),
                 ],
               ),
