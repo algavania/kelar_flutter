@@ -9,10 +9,9 @@ class FeedbackModel with _$FeedbackModel {
   const factory FeedbackModel({
     required DateTime createdAt,
     required DateTime updatedAt,
-    required String title,
     required String content,
+    required String createdBy,
     required int urgencyLevel,
-    String? action,
     String? actionDescription,
     String? actionBy,
     String? id,
@@ -24,8 +23,8 @@ class FeedbackModel with _$FeedbackModel {
 
 FeedbackModel generateMockFeedbackModel() {
   return FeedbackModel(
-    title: 'Title',
     content: 'Description',
+    createdBy: '',
     urgencyLevel: 1,
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),

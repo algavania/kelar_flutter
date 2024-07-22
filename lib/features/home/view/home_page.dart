@@ -1,4 +1,4 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -9,6 +9,7 @@ import 'package:kelar_flutter/features/dashboard/data/sensor/sensor_model.dart';
 import 'package:kelar_flutter/features/dashboard/view/bloc/dashboard_bloc.dart';
 import 'package:kelar_flutter/injector/injector.dart';
 import 'package:kelar_flutter/l10n/l10n.dart';
+import 'package:kelar_flutter/routes/router.dart';
 import 'package:kelar_flutter/utils/extensions.dart';
 import 'package:kelar_flutter/utils/logger.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -25,6 +26,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _bloc = Injector.instance<DashboardBloc>();
+
+  @override
+  void initState() {
+    _bloc.add(const DashboardEvent.getSensors());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +107,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildMonitoringWidget() {
     return BlocBuilder<DashboardBloc, DashboardState>(
-      bloc: _bloc..add(const DashboardEvent.getSensors()),
+      bloc: _bloc,
       builder: (context, state) {
         return StreamBuilder<List<SensorModel>>(
           stream: _bloc.sensorStream,
@@ -196,34 +203,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildViewStatisticWidget() {
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: 11.h,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: Styles.mediumPadding,
-        vertical: Styles.smallPadding,
-      ),
-      decoration: BoxDecoration(
-        color: ColorValues.primary50,
-        borderRadius: BorderRadius.circular(Styles.defaultBorder),
-        border: Border.all(color: ColorValues.primary50),
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            IconsaxPlusBold.chart,
-            color: ColorValues.white,
-          ),
-          const SizedBox(
-            width: Styles.defaultSpacing,
-          ),
-          Text(
-            context.l10n.viewStatistic,
-            style: context.textTheme.titleMedium
-                .copyWith(color: ColorValues.white),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () {
+        AutoRouter.of(context).navigate(const StatisticRoute());
+      },
+      child: Container(
+        constraints: BoxConstraints(
+          minHeight: 11.h,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Styles.mediumPadding,
+          vertical: Styles.smallPadding,
+        ),
+        decoration: BoxDecoration(
+          color: ColorValues.primary50,
+          borderRadius: BorderRadius.circular(Styles.defaultBorder),
+          border: Border.all(color: ColorValues.primary50),
+        ),
+        child: Row(
+          children: [
+            const Icon(
+              IconsaxPlusBold.chart,
+              color: ColorValues.white,
+            ),
+            const SizedBox(
+              width: Styles.defaultSpacing,
+            ),
+            Text(
+              context.l10n.viewStatistic,
+              style: context.textTheme.titleMedium
+                  .copyWith(color: ColorValues.white),
+            ),
+          ],
+        ),
       ),
     );
   }

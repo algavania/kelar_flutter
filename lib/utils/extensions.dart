@@ -163,3 +163,9 @@ extension RoleExtension on RoleEnum {
     }
   }
 }
+
+extension RoleString on String {
+  RoleEnum getRole() {
+    return RoleEnum.values.firstWhere((e) => e.name == this);
+  }
+}

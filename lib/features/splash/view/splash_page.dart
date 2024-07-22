@@ -9,11 +9,17 @@ import 'package:kelar_flutter/utils/extensions.dart';
 import 'package:sizer/sizer.dart';
 
 @RoutePage()
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+
+  @override
+  void initState() {
     Future.delayed(const Duration(seconds: 2), () {
       if (DbConstants.auth.currentUser == null) {
         AutoRouter.of(context).replace(const LoginRoute());
@@ -21,6 +27,11 @@ class SplashPage extends StatelessWidget {
         AutoRouter.of(context).replace(const DashboardRoute());
       }
     });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SizedBox(

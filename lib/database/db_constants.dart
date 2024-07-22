@@ -7,4 +7,5 @@ class DbConstants {
 
   static const users = 'users';
   static const sensors = 'sensors';
+  static const feedbacks = 'feedbacks';
 }

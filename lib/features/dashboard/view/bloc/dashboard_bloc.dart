@@ -17,23 +17,33 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<_GetSensors>(
       _onGetSensors,
     );
+    on<_Reset>(
+      _onReset,
+    );
   }
 
   final _getSensors = Injector.instance<GetSensors>();
   Stream<List<SensorModel>>? sensorStream;
+
+  Future<void> _onReset(
+    _Reset event,
+    Emitter<DashboardState> emit,
+  ) async {
+    sensorStream = null;
+    emit(const DashboardState.initial());
+  }
 
   Future<void> _onGetSensors(
     _GetSensors event,
     Emitter<DashboardState> emit,
   ) async {
     emit(const DashboardState.loading());
-    _getSensors.call(const None())
-      .fold((failure) {
-        emit(DashboardState.error(failure.message));
-      }, (data) {
-        logger.d('data $data');
-        sensorStream = data;
-        emit(const DashboardState.loaded());
-      });
+    _getSensors.call(const None()).fold((failure) {
+      emit(DashboardState.error(failure.message));
+    }, (data) {
+      logger.d('data $data');
+      sensorStream = data;
+      emit(const DashboardState.loaded());
+    });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:kelar_flutter/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:kelar_flutter/features/dashboard/data/datasources/dashboard_remote_datasource.dart';
+import 'package:kelar_flutter/features/feedback/data/datasources/feedback_remote_datasource.dart';
 import 'package:kelar_flutter/injector/injector.dart';
 
 class DataSourceModule {
@@ -12,6 +13,9 @@ class DataSourceModule {
       )
       ..registerLazySingleton<DashboardRemoteDataSource>(
         DashboardRemoteDataSourceImpl.new,
+      )
+      ..registerLazySingleton<FeedbackRemoteDataSource>(
+        FeedbackRemoteDataSourceImpl.new,
       );
   }
 }

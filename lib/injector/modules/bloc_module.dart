@@ -1,5 +1,6 @@
 import 'package:kelar_flutter/features/auth/view/bloc/auth_bloc.dart';
 import 'package:kelar_flutter/features/dashboard/view/bloc/dashboard_bloc.dart';
+import 'package:kelar_flutter/features/feedback/view/bloc/feedback_bloc.dart';
 import 'package:kelar_flutter/injector/injector.dart';
 
 class BlocModule {
@@ -12,6 +13,9 @@ class BlocModule {
       )
       ..registerLazySingleton<DashboardBloc>(
         DashboardBloc.new,
+      )
+      ..registerLazySingleton<FeedbackBloc>(
+        FeedbackBloc.new,
       );
   }
 }
