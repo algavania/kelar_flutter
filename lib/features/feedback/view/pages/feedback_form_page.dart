@@ -140,10 +140,9 @@ class _FeedbackFormPageState extends State<FeedbackFormPage> {
                     const SizedBox(
                       height: Styles.bigSpacing,
                     ),
-                    _buildManagerFields(),
-                    const SizedBox(
-                      height: Styles.bigSpacing,
-                    ),
+                    if (_isManager ||
+                        widget.feedback?.actionDescription != null)
+                      _buildManagerFields(),
                   ],
                 ),
               ),

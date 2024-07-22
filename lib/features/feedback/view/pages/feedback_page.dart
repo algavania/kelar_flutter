@@ -61,7 +61,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         appBar: AppBar(
           title: Text(context.l10n.feedback),
         ),
-        floatingActionButton: _buildFloatingButton(),
+        floatingActionButton: _isManager ? null : _buildFloatingButton(),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(Styles.defaultPadding),

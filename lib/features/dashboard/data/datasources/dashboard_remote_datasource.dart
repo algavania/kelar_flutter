@@ -11,7 +11,7 @@ class DashboardRemoteDataSourceImpl extends DashboardRemoteDataSource {
     return DbConstants.db
         .collection(DbConstants.sensors)
         .orderBy('date', descending: true)
-        .limit(1)
+        .limit(100)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs.map((doc) {

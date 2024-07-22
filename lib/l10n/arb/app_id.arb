@@ -65,7 +65,7 @@
   "employee": "Pegawai",
   "employeeDescription": "Sebagai karyawan, Anda dapat mengakses hasil monitoring kualitas lingkungan kerja, dan menuliskan feedback untuk meningkatkan kualitas lingkungan kerja agar bisa lebih baik lagi.",
   "manager": "Manajer",
-  "managerDescription": "Sebagai manajer, Anda dapat mengakses hasil monitoring kualitas udara pada lingkungan kerja, dan menuliskan feedback. Selain itu, Anda juga dapat menindak lanjuti feedback karyawan untuk meningkatkan kualitas udara menjadi lebih baik lagi.",
+  "managerDescription": "Sebagai manajer, Anda dapat mengakses hasil monitoring kualitas udara pada lingkungan kerja. Selain itu, Anda juga dapat menindak lanjuti feedback karyawan untuk meningkatkan kualitas udara menjadi lebih baik lagi.",
   "logout": "Keluar",
   "logoutAlert": "Apakah Anda yakin ingin keluar dari akun Anda?",
   "confirmation": "Konfirmasi",
