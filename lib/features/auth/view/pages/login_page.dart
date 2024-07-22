@@ -99,23 +99,23 @@ class _LoginPageState extends State<LoginPage> {
                             validator:
                                 Validator(context: context).emptyValidator,
                           ),
-                          const SizedBox(height: Styles.defaultSpacing),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  AutoRouter.of(context)
-                                      .push(const ForgotPasswordRoute());
-                                },
-                                child: Text(
-                                  context.l10n.forgotPasswordText,
-                                  style:
-                                      Theme.of(context).textTheme.displaySmall,
-                                ),
-                              ),
-                            ],
-                          ),
+                          // const SizedBox(height: Styles.defaultSpacing),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     GestureDetector(
+                          //       onTap: () {
+                          //         AutoRouter.of(context)
+                          //             .push(const ForgotPasswordRoute());
+                          //       },
+                          //       child: Text(
+                          //         context.l10n.forgotPasswordText,
+                          //         style:
+                          //             Theme.of(context).textTheme.displaySmall,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           const SizedBox(height: Styles.bigSpacing),
                           CustomButton(
                             text: context.l10n.login,
