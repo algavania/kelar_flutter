@@ -8,6 +8,8 @@ class DashboardEvent with _$DashboardEvent {
 
   const factory DashboardEvent.getAnalytic() = _GetAnalytic;
 
+  const factory DashboardEvent.getForecast() = _GetForecast;
+
   const factory DashboardEvent.getClassifications(SensorModel data) =
       _GetClassifications;
 

@@ -69,14 +69,14 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(height: 6.h),
                           Text(
                             context.l10n.loginText1,
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                           SizedBox(height: 1.5.h),
                           Text(
                             context.l10n.loginText2,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodySmall
+                                .bodyMedium
                                 ?.copyWith(color: ColorValues.grey50),
                           ),
                           SizedBox(height: 5.h),

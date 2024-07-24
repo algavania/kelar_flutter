@@ -4,6 +4,7 @@ import 'package:kelar_flutter/features/auth/domain/usecases/logout.dart';
 import 'package:kelar_flutter/features/auth/domain/usecases/register.dart';
 import 'package:kelar_flutter/features/dashboard/domain/repositories/dashboard_repository.dart';
 import 'package:kelar_flutter/features/dashboard/domain/usecase/get_classifications.dart';
+import 'package:kelar_flutter/features/dashboard/domain/usecase/get_forecast.dart';
 import 'package:kelar_flutter/features/dashboard/domain/usecase/get_sensors.dart';
 import 'package:kelar_flutter/features/feedback/domain/repositories/feedback_repository.dart';
 import 'package:kelar_flutter/features/feedback/domain/usecase/add_feedback.dart';
@@ -45,7 +46,12 @@ class UseCasesModule {
           Injector.instance<DashboardRepository>(),
         ),
       )
-      /// Feedback Use Cases
+      ..registerLazySingleton<GetForecast>(
+            () => GetForecast(
+          Injector.instance<DashboardRepository>(),
+        ),
+      )
+    /// Feedback Use Cases
       ..registerLazySingleton<GetFeedbacks>(
         () => GetFeedbacks(
           Injector.instance<FeedbackRepository>(),

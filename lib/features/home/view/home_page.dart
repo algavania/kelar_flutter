@@ -15,6 +15,7 @@ import 'package:kelar_flutter/utils/logger.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:sizer/sizer.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -31,7 +32,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _bloc.add(const DashboardEvent.getSensors());
+    _bloc
+      ..add(const DashboardEvent.getSensors())
+      ..add(const DashboardEvent.getForecast());
     super.initState();
   }
 
@@ -57,7 +60,15 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: Styles.bigSpacing,
               ),
+              const AirQualityTable(),
+              const SizedBox(
+                height: Styles.bigSpacing,
+              ),
               _buildAnalyticWidget(),
+              const SizedBox(
+                height: Styles.bigSpacing,
+              ),
+              _buildForecastWidget(),
               const SizedBox(
                 height: Styles.bigSpacing,
               ),
@@ -65,6 +76,54 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildForecastWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                context.l10n.forecast,
+                style: context.textTheme.titleLarge,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                _bloc.add(const DashboardEvent.getForecast());
+              },
+              icon: const Icon(
+                IconsaxPlusBold.refresh,
+                color: ColorValues.primary50,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: Styles.defaultSpacing,
+        ),
+        BlocBuilder<DashboardBloc, DashboardState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            final adviceText = _bloc.forecast ?? 'Lorem ipsum dolor sit amet';
+            return Skeletonizer(
+              enabled: _bloc.forecast == null,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildCard(
+                    context.l10n.futurePrediction,
+                    adviceText,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -108,11 +167,17 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildCard(context.l10n.roomQuality, _bloc.advice?.quality ?? 'Baik',),
+                  _buildCard(
+                    context.l10n.roomQuality,
+                    _bloc.advice?.quality ?? 'Baik',
+                  ),
                   const SizedBox(
                     height: Styles.defaultSpacing,
                   ),
-                  _buildCard(context.l10n.workEnvironment, adviceText,),
+                  _buildCard(
+                    context.l10n.workEnvironment,
+                    adviceText,
+                  ),
                 ],
               ),
             );
@@ -122,7 +187,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCard(String title, String text,) {
+  Widget _buildCard(
+    String title,
+    String text,
+  ) {
     return Container(
       width: 100.w,
       padding: const EdgeInsets.all(Styles.defaultPadding),
@@ -143,7 +211,8 @@ class _HomePageState extends State<HomePage> {
           Text(
             text,
             style: context.textTheme.bodyMedium.copyWith(
-              color: ColorValues.grey50,),
+              color: ColorValues.grey50,
+            ),
           ),
         ],
       ),
@@ -282,10 +351,12 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               width: Styles.defaultSpacing,
             ),
-            Text(
-              context.l10n.viewStatistic,
-              style: context.textTheme.titleMedium
-                  .copyWith(color: ColorValues.white),
+            Expanded(
+              child: Text(
+                context.l10n.viewStatistic,
+                style: context.textTheme.titleMedium
+                    .copyWith(color: ColorValues.white),
+              ),
             ),
           ],
         ),
@@ -293,10 +364,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMonitoringItemWidget(String title,
-      IconData icon,
-      num value,
-      String unit,) {
+  Widget _buildMonitoringItemWidget(
+    String title,
+    IconData icon,
+    num value,
+    String unit,
+  ) {
     return Container(
       constraints: BoxConstraints(
         minHeight: 11.h,
@@ -316,9 +389,6 @@ class _HomePageState extends State<HomePage> {
           Row(
             children: [
               Expanded(child: Text(title)),
-              const SizedBox(
-                width: Styles.defaultSpacing,
-              ),
               Icon(
                 icon,
                 color: ColorValues.primary30,
@@ -430,5 +500,155 @@ class _HomePageState extends State<HomePage> {
       greeting = context.l10n.goodNight;
     }
     return greeting;
+  }
+}
+
+class AirQualityTable extends StatefulWidget {
+  const AirQualityTable({super.key});
+
+  @override
+  State<AirQualityTable> createState() => _AirQualityTableState();
+}
+
+class _AirQualityTableState extends State<AirQualityTable> {
+  late AirQualityDataSource _airQualityDataSource;
+
+  @override
+  void initState() {
+    super.initState();
+    _airQualityDataSource = AirQualityDataSource(getAirQualityData());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.l10n.indicator,
+          style: context.textTheme.titleLarge,
+        ),
+        const SizedBox(
+          height: Styles.defaultSpacing,
+        ),
+        SfDataGrid(
+          source: _airQualityDataSource,
+          columnWidthMode: ColumnWidthMode.fill,
+          showVerticalScrollbar: false,
+          columns: <GridColumn>[
+            GridColumn(
+              columnName: 'Nama',
+              label: Container(
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Nama',
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            GridColumn(
+              columnName: 'Baik',
+              label: Container(
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Baik',
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            GridColumn(
+              columnName: 'Buruk',
+              label: Container(
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Buruk',
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  List<AirQuality> getAirQualityData() {
+    return [
+      AirQuality('Kelembaban', '30-50%', '>60% atau <30%'),
+      AirQuality('Suhu', '20-25°C', '>30°C atau <20°C'),
+      AirQuality('CO2', '<1000 ppm', '>1000 ppm'),
+      AirQuality('CO', '<10 ppm', '>10 ppm'),
+      AirQuality('PM2.5', '0-12 ug/m³', '>12 ug/m³'),
+    ];
+  }
+}
+
+class AirQuality {
+  AirQuality(this.nama, this.baik, this.buruk);
+
+  final String nama;
+  final String baik;
+  final String buruk;
+}
+
+class AirQualityDataSource extends DataGridSource {
+  AirQualityDataSource(this.airQualityData) {
+    buildDataGridRows();
+  }
+
+  List<AirQuality> airQualityData;
+  List<DataGridRow> dataGridRows = [];
+
+  void buildDataGridRows() {
+    dataGridRows = airQualityData
+        .map<DataGridRow>(
+          (dataGridRow) => DataGridRow(
+            cells: [
+              DataGridCell<String>(columnName: 'Nama', value: dataGridRow.nama),
+              DataGridCell<String>(columnName: 'Baik', value: dataGridRow.baik),
+              DataGridCell<String>(
+                  columnName: 'Buruk', value: dataGridRow.buruk,),
+            ],
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  List<DataGridRow> get rows => dataGridRows;
+
+  @override
+  DataGridRowAdapter buildRow(DataGridRow row) {
+    return DataGridRowAdapter(
+      cells: [
+        Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            row.getCells()[0].value.toString(),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            row.getCells()[1].value.toString(),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            row.getCells()[2].value.toString(),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
   }
 }

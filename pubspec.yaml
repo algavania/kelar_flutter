@@ -38,12 +38,14 @@ dependencies:
   sizer: ^2.0.15
   skeletonizer: ^1.4.1+1
   syncfusion_flutter_charts: ^26.1.42
+  syncfusion_flutter_datagrid: ^26.2.4
   syncfusion_flutter_sliders: ^26.1.41
   unicons: ^2.1.1
 
 dev_dependencies:
   auto_route_generator: ^8.0.0
   build_runner: ^2.4.9
+  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
   freezed: ^2.5.2
@@ -58,3 +60,9 @@ flutter:
     - assets/
     - assets/core/
     - assets/home/
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/core/logo.png"
+  min_sdk_android: 21

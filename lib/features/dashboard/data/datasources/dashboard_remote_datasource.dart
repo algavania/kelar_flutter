@@ -11,6 +11,8 @@ abstract class DashboardRemoteDataSource {
   Stream<List<SensorModel>> getSensors();
 
   Future<AdviceModel> getClassification(SensorModel data);
+
+  Future<String> getForecast();
 }
 
 class DashboardRemoteDataSourceImpl extends DashboardRemoteDataSource {
@@ -51,5 +53,15 @@ class DashboardRemoteDataSourceImpl extends DashboardRemoteDataSource {
         ResponseModel.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
     final advice = AdviceModel.fromJson(result.data as Map<String, dynamic>);
     return advice;
+  }
+
+  @override
+  Future<String> getForecast() async {
+    final res = await http.get(
+      Uri.parse('http://192.168.1.18:4000/api/forecast'),
+    );
+    final result =
+    ResponseModel.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
+    return result.data.toString();
   }
 }

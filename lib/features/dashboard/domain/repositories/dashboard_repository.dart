@@ -6,4 +6,5 @@ import 'package:kelar_flutter/features/dashboard/data/models/sensor/sensor_model
 abstract class DashboardRepository {
   Either<Failure, Stream<List<SensorModel>>> getSensors();
   Future<Either<Failure, AdviceModel>> getClassifications(SensorModel data);
+  Future<Either<Failure, String>> getForecast();
 }

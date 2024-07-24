@@ -85,5 +85,8 @@
   "updateFeedbackManagerSuccess": "Tanggapan berhasil dikirim!",
   "notReviewed": "Menunggu tanggapan",
   "reviewed": "Sudah ditanggapi",
-  "roomQuality": "Kualitas Ruangan"
+  "roomQuality": "Kualitas Ruangan",
+  "forecast": "Time Forecasting",
+  "futurePrediction": "Prediksi Masa Depan",
+  "indicator": "Indikator"
 }

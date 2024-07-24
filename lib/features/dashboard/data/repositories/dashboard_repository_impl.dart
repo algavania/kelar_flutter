@@ -20,4 +20,9 @@ class DashboardRepositoryImpl extends DashboardRepository {
   Future<Either<Failure, AdviceModel>> getClassifications(SensorModel data) {
     return safeCall(() => dataSource.getClassification(data));
   }
+
+  @override
+  Future<Either<Failure, String>> getForecast() {
+    return safeCall(dataSource.getForecast);
+  }
 }
