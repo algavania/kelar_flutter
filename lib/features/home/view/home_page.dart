@@ -235,7 +235,9 @@ class _HomePageState extends State<HomePage> {
               }
               if (!_hasFetched) {
                 _hasFetched = true;
-                _bloc.add(DashboardEvent.getClassifications(data));
+                Future.delayed(const Duration(seconds: 1), () {
+                  _bloc.add(DashboardEvent.getClassifications(data));
+                });
               }
             }
             logger.d('snapshot ${snapshot.data}');

@@ -43,7 +43,7 @@ class DashboardRemoteDataSourceImpl extends DashboardRemoteDataSource {
     };
 
     final res = await http.post(
-      Uri.parse('https://kelar-be.vercel.app/api/predict'),
+      Uri.parse('https://kelar-be-1.onrender.com/api/predict'),
       headers: {
         'Content-Type': 'application/json',
       },
