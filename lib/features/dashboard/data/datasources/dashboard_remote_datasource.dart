@@ -58,7 +58,7 @@ class DashboardRemoteDataSourceImpl extends DashboardRemoteDataSource {
   @override
   Future<String> getForecast() async {
     final res = await http.get(
-      Uri.parse('http://192.168.1.18:4000/api/forecast'),
+      Uri.parse('https://kelar-be-1.onrender.com/api/forecast'),
     );
     final result =
     ResponseModel.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
