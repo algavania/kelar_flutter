@@ -43,7 +43,6 @@ unlinked_spec.ds
 *.g.dart
 *.gr.dart
 *.freezed.dart
-firebase_options.dart
 
 # Android related
 **/android/**/gradle-wrapper.jar
