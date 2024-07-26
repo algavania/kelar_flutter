@@ -1,16 +1,24 @@
-# kelar_flutter
+# K3LAR: Your K3 Solution (Mobile App)
 
-Mobile application that connect with IoT to solve K3 problems in office environment.
+K3LAR adalah alat pemantau kualitas ruangan berbasis ESP32 yang ditujukan untuk lingkungan perkantoran. Tujuan dari K3LAR adalah untuk membantu meningkatkan kualitas K3 di lingkungan perkantoran. Data dari alat K3LAR diintegrasikan ke dalam K3LAR Mobile App. Berikut adalah fitur yang ada di dalam K3LAR Mobile App:
+- Pemantauan realtime mengenai kualitas ruangan (suhu, kelembaban, dan kualitas udara).
+- Pemberian feedback untuk kualitas ruangan dari karyawan ke atasan.
+- Terintegrasi AI untuk memberikan saran tindakan (random forest classification dan time forecasting).
+- Grafik statistik kualitas ruangan secara realtime.
 
-## Getting Started
+## Installation
+- Clone project ini.
+- Buka project dengan Visual Studio Code atau Android Studio.
+- Buka terminal  dan jalankan `flutter pub get` `dart run build_runner build`
+- Project sudah bisa dijalankan.
+ 
+## Screenshots
+![Autentikasi](assets/readme/1.png)
 
-This project is a starting point for a Flutter application.
+![Beranda](assets/readme/2.png)
 
-A few resources to get you started if this is your first Flutter project:
+![Feedback Pegawai](assets/readme/3.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Feedback Manajer](assets/readme/4.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Statistik Realtime](assets/readme/5.png)
