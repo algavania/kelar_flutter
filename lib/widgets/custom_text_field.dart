@@ -12,6 +12,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.isDense = false,
     this.isRounded = true,
+    this.enabled = true,
     this.expands = false,
     this.autofocus = false,
     this.label,
@@ -37,6 +38,7 @@ class CustomTextField extends StatefulWidget {
   final bool isRounded;
   final bool expands;
   final bool autofocus;
+  final bool enabled;
   final int? maxLines;
   final int? minLines;
   final FocusNode? focusNode;
@@ -80,6 +82,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
         if (widget.label != null) const SizedBox(height: 8),
         TextFormField(
+          enabled: widget.enabled,
           focusNode: widget.focusNode,
           autofocus: widget.autofocus,
           minLines: widget.minLines,

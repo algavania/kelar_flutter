@@ -46,6 +46,8 @@ ThemeData appThemeData(BuildContext context) {
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
       surfaceTintColor: Colors.transparent,
+      backgroundColor: ColorValues.white,
+      centerTitle: true,
     ),
     navigationBarTheme: NavigationBarThemeData(
       elevation: 0,
@@ -53,8 +55,8 @@ ThemeData appThemeData(BuildContext context) {
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
       surfaceTintColor: ColorValues.white,
       backgroundColor: ColorValues.white,
-      labelTextStyle: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return const TextStyle(
             color: ColorValues.primary50,
             fontSize: 13,
@@ -68,12 +70,17 @@ ThemeData appThemeData(BuildContext context) {
           height: 0,
         );
       }),
-      iconTheme: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      iconTheme: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return const IconThemeData(color: ColorValues.primary50);
         }
         return const IconThemeData(color: ColorValues.grey20);
       }),
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: ColorValues.primary50,
+      foregroundColor: ColorValues.white,
+      elevation: 0,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

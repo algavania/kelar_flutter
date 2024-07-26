@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:kelar_flutter/core/app_text_styles.dart';
 import 'package:kelar_flutter/core/app_theme_data.dart';
 import 'package:kelar_flutter/core/color_values.dart';
+import 'package:kelar_flutter/core/enum.dart';
 import 'package:kelar_flutter/core/styles.dart';
+import 'package:kelar_flutter/l10n/l10n.dart';
 
 // Extension on BuildContext for easy theme access
 extension CustomThemeExtension on BuildContext {
@@ -25,8 +27,7 @@ extension CustomThemeExtension on BuildContext {
         isSuccess ? ColorValues.success10 : ColorValues.danger10;
     final borderColor =
         isSuccess ? ColorValues.success20 : ColorValues.danger20;
-    final color =
-        isSuccess ? ColorValues.success50 : ColorValues.danger50;
+    final color = isSuccess ? ColorValues.success50 : ColorValues.danger50;
     var flushbar = Flushbar();
     flushbar = Flushbar(
       flushbarPosition: isTop ? FlushbarPosition.TOP : FlushbarPosition.BOTTOM,
@@ -74,9 +75,7 @@ extension CustomThemeExtension on BuildContext {
           ),
         ],
       ),
-    )
-
-    ..show(context);
+    )..show(context);
   }
 }
 
@@ -95,6 +94,10 @@ extension FormattedDateTime on DateTime {
     return DateFormat('HH:mm').format(this);
   }
 
+  String toFormattedFullDate({String locale = 'id_ID'}) {
+    return DateFormat('EEEE, d MMMM y', locale).format(this);
+  }
+
   String toFormattedDate() {
     return DateFormat('d MMMM y').format(this);
   }
@@ -107,11 +110,62 @@ extension FormattedDateTime on DateTime {
     return DateFormat('dd/MM/y HH:mm').format(this);
   }
 
-  String toFormattedLongDateWithHour() {
-    return DateFormat('dd MMMM y HH:mm').format(this);
+  String toFormattedLongDateWithHour({String locale = 'id_ID'}) {
+    return DateFormat('dd MMMM y HH:mm', locale).format(this);
   }
 
   String toYearMonthString() {
     return DateFormat('yyyyMM').format(this);
+  }
+}
+
+extension UrgencyLevelExtension on UrgencyLevel {
+  String getMessage(BuildContext context) {
+    switch (this) {
+      case UrgencyLevel.high:
+        return context.l10n.high;
+      case UrgencyLevel.medium:
+        return context.l10n.medium;
+      case UrgencyLevel.low:
+        return context.l10n.low;
+    }
+  }
+}
+
+extension UrgencyExtension on num {
+  UrgencyLevel getUrgencyLevel() {
+    if (toInt() == UrgencyLevel.low.value) {
+      return UrgencyLevel.low;
+    } else if (toInt() == UrgencyLevel.medium.value) {
+      return UrgencyLevel.medium;
+    } else {
+      return UrgencyLevel.high;
+    }
+  }
+}
+
+extension RoleExtension on RoleEnum {
+  String getMessage(BuildContext context) {
+    switch (this) {
+      case RoleEnum.employee:
+        return context.l10n.employee;
+      case RoleEnum.manager:
+        return context.l10n.manager;
+    }
+  }
+
+  String getDescription(BuildContext context) {
+    switch (this) {
+      case RoleEnum.employee:
+        return context.l10n.employeeDescription;
+      case RoleEnum.manager:
+        return context.l10n.managerDescription;
+    }
+  }
+}
+
+extension RoleString on String {
+  RoleEnum getRole() {
+    return RoleEnum.values.firstWhere((e) => e.name == this);
   }
 }
